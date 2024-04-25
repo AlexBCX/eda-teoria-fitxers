@@ -2,24 +2,42 @@ package exercicis.ex_03_InfoLinies;
 
 import java.io.*;
 import javax.swing.JFileChooser;
-import classes.Fitxer;
 
 public class InfoLinies {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
+		BufferedReader entrada = null;
+		int comptador = 0;
 
-		BufferedReader bur;
 		JFileChooser fileChooser = new JFileChooser(".");
-		File arxiu;
-
 		fileChooser.setDialogTitle("Seleccionar arxiu");
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		fileChooser.showOpenDialog(null);
-		arxiu = fileChooser.getSelectedFile();
-		
-		/* COMPLETE */
-		
-		
-	}
+		File arxiu = fileChooser.getSelectedFile();
 
+		if (arxiu != null) {
+			try {
+				entrada = new BufferedReader(new FileReader(arxiu));
+				String liniaLegida;
+
+				while ((liniaLegida = entrada.readLine()) != null) {
+					comptador++;
+					System.out.println("Linia " + comptador + ": " + liniaLegida + " mida=> " + liniaLegida.length());
+				}
+			} catch (IOException e) {
+				System.err.println(e);
+				e.printStackTrace();
+			} finally {
+				try {
+					if (entrada != null) {
+						entrada.close();
+					}
+				} catch (IOException e) {
+					System.err.println(e);
+				}
+			}
+		} else {
+			System.out.println("No file selected.");
+		}
+	}
 }
