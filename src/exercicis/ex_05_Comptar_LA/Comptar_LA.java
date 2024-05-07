@@ -7,42 +7,41 @@ import classes.Teclat.*;
 
 public class Comptar_LA {
 
-    public static void main (String [] args) throws IOException {
-    // en aquest exercici no caldrà capturar excepcions perquè si aquestes
-    // es produissin deixariem que fossin propagades fins a la màquina
-    // virtual.
+    public static void main(String[] args) throws IOException {
+        File file;
+        String filename;
+        BufferedReader entrada;
+        String linia;
+        int aparicions = 0;
 
-       File file;
-       String filename;
-       BufferedReader entrada;
-       String linia;
-       int aparicions = 0;
+        System.out.println();
+        System.out.print("nom de l'arxiu TXT (sense extensión): ");
+        filename = "arxiuLA";  // Leer el nombre del archivo desde el teclado
+        filename = filename + ".txt";  // Añadir la extensión .txt al nombre del archivo
 
-       System.out.println();
-       System.out.print("nom de l'arxiu TXT (sense extensió): ");
-       filename = Teclat.llegirCadena();
-       filename = filename + ".txt";
+        file = new File(filename);  // Crear un objeto File con el nombre de archivo completo
+        entrada = new BufferedReader(new FileReader(file));  // Abrir el archivo para leer
 
+        // Leer y procesar cada línea del archivo
+        while ((linia = entrada.readLine()) != null) {
+            aparicions += processarLinia(linia);  // Sumar las apariciones encontradas en cada línea
+        }
+        entrada.close();  // Cerrar el BufferedReader
 
-       /* COMPLETAR */
-
-       System.out.println("la cadena LA apareix " + aparicions + " vegades");
+        System.out.println("la cadena LA apareix " + aparicions + " vegades");
     }
 
-    private static int processarLinia (String linia) {
-        // aquest procediment compta el n�mero de vegades que apareix 
-        // la cadena LA, en qualsevol de les seves variants, a la l�nia de
-        // text donada com a paràmetre
+    private static int processarLinia(String linia) {
         int pos, resultat;
-
-        linia = linia.toUpperCase();
-        
+        linia = linia.toUpperCase();  // Convertir la línea a mayúsculas para la búsqueda uniforme
         resultat = 0;
-        pos = linia.indexOf("LA");
+        pos = linia.indexOf("LA");  // Buscar la primera aparición de "LA"
 
-        /* COMPLETAR */
-        // us pot ser �til una iteraci� en qu� es fa �s del m�tode
-        // indexOf en la seva versi� de dos par�metres...
+        // Contar todas las apariciones de "LA"
+        while (pos != -1) {
+            resultat++;
+            pos = linia.indexOf("LA", pos + 1);  // Buscar la próxima aparición después de la actual
+        }
 
         return resultat;
     }
