@@ -20,11 +20,14 @@ public class ToUpper_Console {
         try {
             /* COMPLETAR */
         	entrada = new BufferedReader(new FileReader(file));
+        	
         }
         catch (FileNotFoundException e) {
             /* COMPLETAR */
         	System.out.println("Arxiu no trobat");
         	System.exit(0);
+
+        	
         }
 
         // llegir i mostrar en maj�scules
@@ -32,22 +35,16 @@ public class ToUpper_Console {
         System.out.println("--------------------------------------------------");
         try {
            /* COMPLETAR */
-            do{
-                linia = entrada.readLine();
-                // processar linia
-                if (linia!=null){
-                    if(linia == "")
-                        System.out.printf("------------------");
-                    else{
-                        System.out.print(linia);
-                        System.out.print(" ==> ");
-                        System.out.println(linia.toUpperCase());
-                    }
-                }
-
-                // passar a la l�nia seg�ent
-            } while(linia!=null);
-            // arxiu exhaurit. Totes les l�nies processades
+           linia = entrada.readLine();
+           while(linia!=null) {
+        	   // processar linia
+        	   System.out.print(linia);
+        	   System.out.print(" ==> ");
+        	   System.out.println(linia.toUpperCase());
+        	   // passar a la l�nia seg�ent
+        	   linia = entrada.readLine();
+           }
+           // arxiu exhaurit. Totes les l�nies processades
            
            entrada.close();
         }

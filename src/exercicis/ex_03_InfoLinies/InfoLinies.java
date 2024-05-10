@@ -5,53 +5,39 @@ import javax.swing.JFileChooser;
 
 public class InfoLinies {
 
-	public static void main(String[] args) throws IOException {
-
-		BufferedReader bur;
-		JFileChooser fileChooser = new JFileChooser(".");
-		File arxiu;
-		float mitjana = 0f;
-		float comptaLinies = 0f;
-		float mida = 0, suma = 0f;
-		String linia;
+	public static void main(String[] args) {
 		BufferedReader entrada = null;
+		int comptador = 0;
 
-
+		JFileChooser fileChooser = new JFileChooser(".");
 		fileChooser.setDialogTitle("Seleccionar arxiu");
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		fileChooser.showOpenDialog(null);
-		arxiu = fileChooser.getSelectedFile();
-		try {
-			entrada = new BufferedReader(
-					new FileReader(arxiu));
-		}
-		catch(IOException ex) {
-			System.err.println("Problemes en la" +
-					"creació dels canals");
-			ex.printStackTrace();
-			System.exit(0);
-		}
-		/* COMPLETE */
-		linia = entrada.readLine();
-		while(linia!=null) {
-			comptaLinies ++;
-			mida = linia.length();
-			System.out.format("Línia %.0f:" +
-					" %s mida => %.0f\n",
-					comptaLinies,
-					linia,
-					mida
-					);
-			suma += mida;
-			linia = entrada.readLine();
-		}
-		System.out.format("L'arxiu %s té %.0f línies\n",
-				arxiu.getName(),
-				comptaLinies);
-		mitjana = suma/comptaLinies;
-		System.out.format("La mida mitjana de les" +
-						"línies és %.2f caràcters\n",
-				mitjana);
-	}
+		File arxiu = fileChooser.getSelectedFile();
 
+		if (arxiu != null) {
+			try {
+				entrada = new BufferedReader(new FileReader(arxiu));
+				String liniaLegida;
+
+				while ((liniaLegida = entrada.readLine()) != null) {
+					comptador++;
+					System.out.println("Linia " + comptador + ": " + liniaLegida + " mida=> " + liniaLegida.length());
+				}
+			} catch (IOException e) {
+				System.err.println(e);
+				e.printStackTrace();
+			} finally {
+				try {
+					if (entrada != null) {
+						entrada.close();
+					}
+				} catch (IOException e) {
+					System.err.println(e);
+				}
+			}
+		} else {
+			System.out.println("No file selected.");
+		}
+	}
 }
